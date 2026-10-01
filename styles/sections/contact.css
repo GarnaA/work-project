@@ -1,0 +1,27 @@
+.contact { position: relative; padding-top: 150px; padding-bottom: 150px; overflow: hidden; display: grid; grid-template-columns: .9fr 1fr; gap: clamp(50px, 8vw, 130px); background: linear-gradient(135deg, #dfe9f4, #f4f6f5 54%, #dbe7f2); }
+.contact-orb { position: absolute; border-radius: 50%; filter: blur(1px); pointer-events: none; }
+.orb-one { width: 520px; height: 520px; right: -180px; top: -200px; background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.95), rgba(117,157,200,.35) 44%, transparent 70%); }
+.orb-two { width: 300px; height: 300px; left: -100px; bottom: -120px; background: radial-gradient(circle at 62% 30%, rgba(255,255,255,.9), rgba(93,139,190,.22), transparent 70%); }
+.contact-copy, .contact-form { position: relative; z-index: 1; }
+.contact-copy h2 { margin-top: 34px; }
+.contact-copy > p { max-width: 600px; margin-top: 28px; color: var(--muted); font-size: 17px; line-height: 1.65; }
+.contact-links { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 35px; }
+.contact-links a { padding-bottom: 5px; border-bottom: 1px solid var(--line); font-size: 14px; font-weight: 650; }
+.contact-form { align-self: center; padding: clamp(24px, 3.5vw, 50px); border-radius: 34px; }
+.contact-form label { display: block; color: #44566d; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.form-row { display: grid; grid-template-columns: repeat(2,1fr); gap: 22px; }
+.contact-form input, .contact-form textarea { width: 100%; margin: 8px 0 24px; padding: 13px 0; color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid rgba(6,17,36,.22); border-radius: 0; outline: 0; font-size: 16px; font-weight: 450; text-transform: none; resize: vertical; transition: border-color .25s ease; }
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--ink); }
+.contact-form textarea::placeholder { color: #8592a3; }
+.form-bottom { display: flex; justify-content: space-between; align-items: center; gap: 25px; }
+.form-bottom > p { max-width: 300px; color: #6a798c; font-size: 10px; line-height: 1.45; }
+
+@media (max-width: 820px) {
+  .contact { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .form-bottom { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  .contact-form { padding: 24px 20px; }
+}
