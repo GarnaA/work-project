@@ -36,15 +36,27 @@ import { initPreload, initReveal, initMotion } from './animations.js';
     });
   }
 
-  let lastY = 0;
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (header) {
-      header.classList.toggle('scrolled', y > 40);
-      header.classList.toggle('hidden', y > lastY && y > 420);
-    }
-    lastY = y;
-  }, { passive: true });
+  if (header) {
+    const topThreshold = 80;
+    const scrollSlack = 10;
+    let scrollAnchor = 0;
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+
+      if (y <= topThreshold) {
+        header.classList.remove('hidden', 'scrolled');
+        scrollAnchor = y;
+      } else if (y > scrollAnchor + scrollSlack) {
+        header.classList.add('hidden');
+        scrollAnchor = y;
+      } else if (y < scrollAnchor - scrollSlack) {
+        header.classList.remove('hidden');
+        header.classList.add('scrolled');
+        scrollAnchor = y;
+      }
+    }, { passive: true });
+  }
 
   initReveal();
   initMotion();
