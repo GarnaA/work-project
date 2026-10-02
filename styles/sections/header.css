@@ -69,10 +69,22 @@
   letter-spacing: .2em;
 }
 
-.site-header .brand { height: 60px; }
-.site-header .brand-mark { width: 36px; height: 36px; }
-.site-header .brand > span { font-size: 21px; }
-.site-header .brand small { margin: 0 0 5px 7px; }
+.site-header .brand {
+  height: 60px;
+}
+
+.site-header .brand-mark {
+  width: 36px;
+  height: 36px;
+}
+
+.site-header .brand > span {
+  font-size: 21px;
+}
+
+.site-header .brand small {
+  margin: 0 0 5px 7px;
+}
 
 .header-menu {
   display: contents;
