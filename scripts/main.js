@@ -1,4 +1,4 @@
-import { initPreload, initReveal, initMotion } from './animations.js';
+import { initPreload, initReveal, initMotion, initWorkCarousel } from './animations.js';
 
 (() => {
   const body = document.body;
@@ -60,6 +60,7 @@ import { initPreload, initReveal, initMotion } from './animations.js';
 
   initReveal();
   initMotion();
+  initWorkCarousel();
 
   const form = document.querySelector('#leadForm');
   if (form) {

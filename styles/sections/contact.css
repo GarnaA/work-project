@@ -4,7 +4,7 @@
   padding-bottom: 150px; overflow: hidden; 
   display: grid; grid-template-columns: .9fr 1fr; 
   gap: clamp(50px, 8vw, 130px); 
-  background: linear-gradient(135deg, #dfe9f4, #f4f6f5 54%, #dbe7f2); 
+  background: linear-gradient(135deg, var(--blue-light), var(--white) 54%, var(--paper-blue)); 
 }
 
 .contact-orb { 
@@ -20,7 +20,7 @@
   right: -180px; 
   top: -200px; 
   background: radial-gradient(circle at 35% 35%, 
-    rgba(255,255,255,.95), rgba(117,157,200,.35) 44%, transparent 70%); 
+    rgba(255,255,255,.95), rgba(59,130,196,.32) 44%, transparent 70%); 
 }
 
 .orb-two { 
@@ -29,7 +29,7 @@
   left: -100px; 
   bottom: -120px; 
   background: radial-gradient(circle at 62% 30%, 
-    rgba(255,255,255,.9), rgba(93,139,190,.22), transparent 70%); 
+    rgba(255,255,255,.92), rgba(59,130,196,.2), transparent 70%); 
   }
 
 .contact-copy, .contact-form { 
@@ -70,7 +70,7 @@
 
 .contact-form label { 
   display: block; 
-  color: #44566d; 
+  color: var(--blue-dark); 
   font-size: 11px; 
   font-weight: 700; 
   letter-spacing: .08em; 
@@ -90,7 +90,7 @@
   color: var(--ink); 
   background: transparent; 
   border: 0; 
-  border-bottom: 1px solid rgba(6,17,36,.22); 
+  border-bottom: 1px solid rgba(10,39,72,.22); 
   border-radius: 0; 
   outline: 0; 
   height: 46px;
@@ -107,7 +107,7 @@
 }
 
 .contact-form textarea::placeholder { 
-  color: #8592a3; 
+  color: var(--blue); 
 }
 
 .form-bottom { 
@@ -119,7 +119,7 @@
 
 .form-bottom > p { 
   max-width: 300px; 
-  color: #6a798c; 
+  color: var(--muted); 
   font-size: 10px; 
   line-height: 1.45; 
 }
