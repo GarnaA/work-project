@@ -140,7 +140,7 @@
       </div>
     </section>
 
-    <section class="founder section-pad">
+    <section class="founder section-pad" id="founder">
       <div class="founder-photo reveal"><img src="assets/leonid-ksenchuk.jpg" alt="Леонід Ксенчук, засновник ITLEO"><span>Засновник · Architect · Developer</span></div>
       <div class="founder-copy reveal"><div class="section-number">05 · ЛІДЕРСТВО</div><blockquote>«Технології мають спрощувати бізнес, а не робити його складнішим».</blockquote><p>Леонід Ксенчук розвиває ITLEO з engineering-first підходом: чіткі рішення, пряма комунікація та відповідальність за результат. Кожен важливий проєкт отримує його особисту технічну увагу — від архітектури до запуску.</p><div class="founder-actions"><a class="button button-dark" href="https://leoxench.com/" target="_blank" rel="noopener">Особисте портфоліо <b>↗</b></a><a class="button button-line" href="https://www.linkedin.com/in/leonid-xenchuk-5022a6163/" target="_blank" rel="noopener">LinkedIn <b>↗</b></a></div></div>
     </section>
@@ -154,11 +154,44 @@
 
   <footer class="footer section-pad">
     <div class="footer-main">
-      <a class="brand footer-brand" href="#top"><svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" fill="none" stroke="currentColor"/><path d="M7 27c6.5-5.8 12-7.2 17-4.2 5.2 3.1 9.4 2 13-2.7M9 14.5c5.5-3.1 10.8-2.9 15.7.5 4.4 3 7.8 2.8 10.4 1.2M11.2 34.5c4-2 7.7-2.2 11-.4 3.2 1.8 6.3 1.7 9.4-.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>ITLEO</span></a>
-      <p>Software-компанія, заснована в Дніпрі.<br>Створюємо цифрові продукти для України та світу.</p>
-      <div class="footer-nav"><div><span>Навігація</span><a href="#about">Про нас</a><a href="#services">Послуги</a><a href="#work">Проєкти</a><a href="#process">Процес</a></div><div><span>Проєкти</span><a href="https://academy.itleo.com.ua" target="_blank" rel="noopener">ITLEO Academy</a><a href="https://ukrdiaspora.nauka.gov.ua" target="_blank" rel="noopener">UkrDiaspora</a><a href="https://leoxench.com" target="_blank" rel="noopener">Портфоліо засновника</a></div><div><span>Мова</span><a href="#top" aria-current="page">Українська</a><a href="https://itleo.com.ua/it/">Italiano</a></div></div>
+      <div class="footer-intro">
+        <a class="brand" href="#top" aria-label="ITLEO Ukraine — головна">
+          <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" fill="none" stroke="currentColor"/><path d="M7 27c6.5-5.8 12-7.2 17-4.2 5.2 3.1 9.4 2 13-2.7M9 14.5c5.5-3.1 10.8-2.9 15.7.5 4.4 3 7.8 2.8 10.4 1.2M11.2 34.5c4-2 7.7-2.2 11-.4 3.2 1.8 6.3 1.7 9.4-.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <span>ITLEO</span>
+          <small>UKRAINE</small>
+        </a>
+        <p>Software-компанія, заснована в Дніпрі. Створюємо цифрові продукти для України та світу.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Компанія">
+        <span>Компанія</span>
+        <a href="#about">Про нас</a>
+        <a href="#founder">Засновник</a>
+        <a href="#process">Процес</a>
+      </nav>
+      <nav class="footer-nav" aria-label="Послуги">
+        <span>Послуги</span>
+        <a href="#services">Сайти</a>
+        <a href="#services">E-commerce</a>
+        <a href="#services">Платформи</a>
+        <a href="#services">AI та автоматизація</a>
+      </nav>
+      <nav class="footer-nav" aria-label="Проєкти">
+        <span>Проєкти</span>
+        <a href="https://academy.itleo.com.ua" target="_blank" rel="noopener">ITLEO Academy</a>
+        <a href="https://ukrdiaspora.nauka.gov.ua" target="_blank" rel="noopener">UkrDiaspora</a>
+        <a href="https://publiclawntu.com.ua" target="_blank" rel="noopener">Public Law NTU</a>
+      </nav>
+      <nav class="footer-nav" aria-label="Контакти">
+        <span>Контакти</span>
+        <a href="mailto:hello@itleo.com.ua">Email</a>
+        <a href="https://wa.me/380667388829" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.linkedin.com/in/leonid-xenchuk-5022a6163/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
     </div>
-    <div class="footer-bottom"><span>© <span id="year"></span> ITLEO. Усі права захищені.</span><span>Засновано в Дніпрі · Українські технології · Глобальне бачення</span></div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> ITLEO. Усі права захищені.</span>
+      <span>Founded in Dnipro · Made in Ukraine</span>
+    </div>
   </footer>
   <script type="module" src="scripts/main.js"></script>
 </body>
