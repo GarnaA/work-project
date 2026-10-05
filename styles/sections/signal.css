@@ -1,31 +1,22 @@
 .signal {
-  padding-top: 28px;
-  padding-bottom: 28px;
+  padding-top: 14px;
+  padding-bottom: 14px;
   background: var(--ink);
   color: #fff;
   overflow: hidden;
-}
-
-.signal-label {
-  margin-bottom: 20px;
-  color: var(--blue-light);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
 }
 
 .tech-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 14px;
   white-space: nowrap;
 }
 
 .tech-row span {
   font-family: Manrope, sans-serif;
-  font-size: clamp(18px, 2vw, 30px);
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -.04em;
 }
@@ -51,6 +42,6 @@
   }
 
   .tech-row span {
-    font-size: 22px;
+    font-size: 17px;
   }
 }
