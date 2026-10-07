@@ -1,11 +1,9 @@
 .contact {
   position: relative;
-  padding-top: 150px;
-  padding-bottom: 150px;
+  padding: 150px var(--pad);
   overflow: hidden;
   display: grid;
   grid-template-columns: .9fr 1fr;
-  gap: clamp(50px, 8vw, 130px);
   background: linear-gradient(135deg, var(--blue-light), var(--white) 54%, var(--paper-blue));
 }
 
@@ -45,8 +43,8 @@
   max-width: 600px;
   margin-top: 28px;
   color: var(--muted);
-  font-size: 17px;
-  line-height: 1.65;
+  font-size: 24px;
+  line-height: 1.55;
 }
 
 .contact-links {
@@ -60,7 +58,7 @@
 .contact-links a {
   padding-bottom: 5px;
   border-bottom: 1px solid var(--line);
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 650;
 }
 
@@ -73,7 +71,7 @@
 .contact-form label {
   display: block;
   color: var(--blue-dark);
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -99,9 +97,9 @@
   border-bottom: 1px solid rgba(10,39,72,.22);
   border-radius: 0;
   outline: 0;
-  height: 46px;
-  font-size: 16px;
-  line-height: 20px;
+  height: 60px;
+  font-size: 22px;
+  line-height: 28px;
   font-weight: 450;
   text-transform: none;
   resize: none;
@@ -123,7 +121,7 @@
   display: block;
   margin-top: 6px;
   color: #c43838;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1.4;
@@ -132,6 +130,10 @@
 
 .field-error:empty {
   display: none;
+}
+
+.contact-form .button {
+  font-size: 20px;
 }
 
 .contact-form .button:disabled {
@@ -156,9 +158,9 @@
 }
 
 .form-bottom > p {
-  max-width: 300px;
+  max-width: 380px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 16px;
   line-height: 1.45;
 }
 

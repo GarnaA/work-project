@@ -1,4 +1,4 @@
-import { initPreload, initReveal, initMotion, initWorkCarousel } from './animations.js';
+import { initPreload, initReveal, initMotion, initProjectReel } from './animations.js';
 
 const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
 
@@ -133,6 +133,52 @@ const initPrinciples = () => {
   select(items.find((item) => item.classList.contains('is-active')) || items[0]);
 };
 
+const initServices = () => {
+  const root = document.querySelector('.service-stage');
+  if (!root) return;
+
+  const cards = [...root.querySelectorAll('.service-card')];
+  const details = [...root.querySelectorAll('.service-detail')];
+  let frame = 0;
+
+  const select = (card) => {
+    const next = details.find((detail) => detail.dataset.service === card.dataset.service);
+    const current = details.find((detail) => detail.classList.contains('is-active'));
+    if (!next || next === current) return;
+
+    const token = ++frame;
+    cards.forEach((entry) => {
+      const active = entry === card;
+      entry.classList.toggle('is-active', active);
+      entry.setAttribute('aria-pressed', String(active));
+    });
+
+    const show = () => {
+      if (token !== frame) return;
+      details.forEach((detail) => {
+        const active = detail === next;
+        detail.classList.toggle('is-active', active);
+        detail.classList.remove('is-leaving');
+        detail.hidden = !active;
+        if (active) detail.classList.remove('is-shown');
+      });
+      void next.offsetWidth;
+      next.classList.add('is-shown');
+    };
+
+    if (current && current.classList.contains('is-shown')) {
+      current.classList.remove('is-shown');
+      current.classList.add('is-leaving');
+      window.setTimeout(show, 300);
+      return;
+    }
+
+    show();
+  };
+
+  cards.forEach((card) => card.addEventListener('click', () => select(card)));
+};
+
 (() => {
   const body = document.body;
   const toggle = document.querySelector('.menu-toggle');
@@ -192,9 +238,10 @@ const initPrinciples = () => {
   }
 
   initPrinciples();
+  initServices();
   initReveal();
   initMotion();
-  initWorkCarousel();
+  initProjectReel();
 
   const form = document.querySelector('#leadForm');
   if (form) initContactForm(form);

@@ -122,30 +122,90 @@
     <section class="services section-pad" id="services">
       <div class="section-head reveal">
         <div><div class="section-number">02 · ПОСЛУГИ</div><h2>Від ідеї до продукту.<br><em>Без хаосу між підрядниками.</em></h2></div>
-        <p>Одна команда відповідає за стратегію, UX/UI, розробку, інтеграції, тестування, запуск і подальшу підтримку.</p>
       </div>
-      <div class="service-list">
-        <article class="service-card reveal"><div class="service-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 11h26M9 8h.1M13 8h.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><div class="service-index">01</div><h3>Сайти з високою конверсією</h3><p>Корпоративні сайти, landing page та портали, які чітко передають цінність, формують довіру й перетворюють відвідувачів на клієнтів.</p><div class="service-tags"><span>UX/UI</span><span>CMS</span><span>SEO</span><span>Performance</span></div></article>
-        <article class="service-card reveal"><div class="service-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 9h22l-2 11H9L5 5H2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="25" r="2"/><circle cx="23" cy="25" r="2"/></svg></div><div class="service-index">02</div><h3>E-commerce, що продає</h3><p>Каталоги, оплати, доставки, CRM та аналітика, об’єднані у зручний клієнтський досвід і просту систему керування.</p><div class="service-tags"><span>Shopify</span><span>WooCommerce</span><span>Payments</span><span>CRM</span></div></article>
-        <article class="service-card reveal"><div class="service-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="18" y="4" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="4" y="18" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="18" y="18" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></div><div class="service-index">03</div><h3>Платформи та SaaS</h3><p>Особисті кабінети, dashboard, LMS, marketplace та бізнес-системи з ролями, API, оплатами й логікою під ваші процеси.</p><div class="service-tags"><span>React</span><span>Node.js</span><span>API</span><span>Cloud</span></div></article>
-        <article class="service-card reveal"><div class="service-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3v5M16 24v5M3 16h5M24 16h5M6.8 6.8l3.5 3.5M21.7 21.7l3.5 3.5M25.2 6.8l-3.5 3.5M10.3 21.7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="16" cy="16" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></div><div class="service-index">04</div><h3>Автоматизація та AI</h3><p>Прибираємо ручну роботу за допомогою інтеграцій, ботів, розумних workflow, QA automation та практичних AI-інструментів.</p><div class="service-tags"><span>AI</span><span>Automation</span><span>CI/CD</span><span>QA</span></div></article>
+      <div class="service-stage">
+        <div class="service-panel" aria-live="polite">
+          <article class="service-detail is-active is-shown" id="service-detail-1" data-service="1">
+            <div class="service-index">01</div>
+            <h3>Сайти з високою конверсією</h3>
+            <p>Корпоративні сайти, landing page та портали, які чітко передають цінність, формують довіру й перетворюють відвідувачів на клієнтів.</p>
+            <div class="service-tags"><span>UX/UI</span><span>CMS</span><span>SEO</span><span>Performance</span></div>
+          </article>
+          <article class="service-detail" id="service-detail-2" data-service="2" hidden>
+            <div class="service-index">02</div>
+            <h3>E-commerce, що продає</h3>
+            <p>Каталоги, оплати, доставки, CRM та аналітика, об’єднані у зручний клієнтський досвід і просту систему керування.</p>
+            <div class="service-tags"><span>Shopify</span><span>WooCommerce</span><span>Payments</span><span>CRM</span></div>
+          </article>
+          <article class="service-detail" id="service-detail-3" data-service="3" hidden>
+            <div class="service-index">03</div>
+            <h3>Платформи та SaaS</h3>
+            <p>Особисті кабінети, dashboard, LMS, marketplace та бізнес-системи з ролями, API, оплатами й логікою під ваші процеси.</p>
+            <div class="service-tags"><span>React</span><span>Node.js</span><span>API</span><span>Cloud</span></div>
+          </article>
+          <article class="service-detail" id="service-detail-4" data-service="4" hidden>
+            <div class="service-index">04</div>
+            <h3>Автоматизація та AI</h3>
+            <p>Прибираємо ручну роботу за допомогою інтеграцій, ботів, розумних workflow, QA automation та практичних AI-інструментів.</p>
+            <div class="service-tags"><span>AI</span><span>Automation</span><span>CI/CD</span><span>QA</span></div>
+          </article>
+        </div>
+        <div class="service-list">
+          <button class="service-card is-active reveal" type="button" id="service-1" data-service="1" aria-pressed="true" aria-controls="service-detail-1"><div class="service-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 11h26M9 8h.1M13 8h.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div><div class="service-index">01</div><h3>Сайти з високою конверсією</h3></button>
+          <button class="service-card reveal" type="button" id="service-2" data-service="2" aria-pressed="false" aria-controls="service-detail-2"><div class="service-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 9h22l-2 11H9L5 5H2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="25" r="2"/><circle cx="23" cy="25" r="2"/></svg></div><div class="service-index">02</div><h3>E-commerce, що продає</h3></button>
+          <button class="service-card reveal" type="button" id="service-3" data-service="3" aria-pressed="false" aria-controls="service-detail-3"><div class="service-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="4" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="18" y="4" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="4" y="18" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="18" y="18" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></div><div class="service-index">03</div><h3>Платформи та SaaS</h3></button>
+          <button class="service-card reveal" type="button" id="service-4" data-service="4" aria-pressed="false" aria-controls="service-detail-4"><div class="service-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3v5M16 24v5M3 16h5M24 16h5M6.8 6.8l3.5 3.5M21.7 21.7l3.5 3.5M25.2 6.8l-3.5 3.5M10.3 21.7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="16" cy="16" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></div><div class="service-index">04</div><h3>Автоматизація та AI</h3></button>
+        </div>
+        <p class="service-note">Одна команда відповідає за стратегію, UX/UI, розробку, інтеграції, тестування, запуск і подальшу підтримку.</p>
       </div>
     </section>
 
     <section class="work section-pad" id="work">
       <div class="work-intro reveal"><div class="section-number light">03 · ОБРАНІ ПРОЄКТИ</div><h2>Робота говорить сама.<br><em>Результат залишається.</em></h2><p>Цифрові рішення для освіти, науки, організацій, комерції та спільнот.</p></div>
-      <div class="work-carousel">
-        <div class="work-controls">
-          <button class="work-arrow" type="button" data-dir="prev" aria-label="Попередній проєкт"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <button class="work-arrow" type="button" data-dir="next" aria-label="Наступний проєкт"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6 15.5 12l-6 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="project-reel" tabindex="0" role="region" aria-label="Обрані проєкти">
+        <p class="reel-count" aria-live="polite">01 / 04</p>
+        <div class="reel-heading">
+          <a class="reel-title is-current" href="https://ukrdiaspora.nauka.gov.ua" target="_blank" rel="noopener"><span class="reel-name">UkrDiaspora</span><span class="reel-arrow" aria-hidden="true">↗</span></a>
+          <a class="reel-title" href="https://dnipromovantu.com.ua" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><span class="reel-name">Dnipro Movantu</span><span class="reel-arrow" aria-hidden="true">↗</span></a>
+          <a class="reel-title" href="https://publiclawntu.com.ua" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><span class="reel-name">Public Law NTU</span><span class="reel-arrow" aria-hidden="true">↗</span></a>
+          <a class="reel-title" href="https://academy.itleo.com.ua" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><span class="reel-name">ITLEO Academy</span><span class="reel-arrow" aria-hidden="true">↗</span></a>
         </div>
-        <div class="work-viewport" role="region" aria-roledescription="карусель" aria-label="Обрані проєкти">
-          <div class="work-track">
-            <a class="case" href="https://ukrdiaspora.nauka.gov.ua" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/3182750/pexels-photo-3182750.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Міжнародна команда під час стратегічної сесії"><span class="case-shade"></span><div class="case-top"><span>ПЛАТФОРМА · НАУКА</span><b>↗</b></div><div class="case-info"><small>01</small><h3>UkrDiaspora</h3><p>Національна платформа, що об’єднує українських науковців у всьому світі.</p><div><span>UX-дослідження</span><span>Архітектура</span><span>Розробка</span><span>Безпека</span></div></div></a>
-            <a class="case" href="https://dnipromovantu.com.ua" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Студентка працює з цифровим освітнім продуктом"><span class="case-shade"></span><div class="case-top"><span>WEB · ОСВІТА</span><b>↗</b></div><div class="case-info"><small>02</small><h3>Dnipro Movantu</h3><p>Зрозумілий, доступний і змістовний освітній web-продукт.</p></div></a>
-            <a class="case" href="https://publiclawntu.com.ua" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Професійне середовище для університетського юридичного проєкту"><span class="case-shade"></span><div class="case-top"><span>УНІВЕРСИТЕТ · ПРАВО</span><b>↗</b></div><div class="case-info"><small>03</small><h3>Public Law NTU</h3><p>Структурований академічний ресурс для навчання, досліджень і професійної спільноти.</p></div></a>
-            <a class="case" href="https://academy.itleo.com.ua" target="_blank" rel="noopener"><img src="https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Команда ITLEO Academy під час практичного навчання"><span class="case-shade"></span><div class="case-top"><span>EDTECH · СПІЛЬНОТА</span><b>↗</b></div><div class="case-info"><small>04</small><h3>ITLEO Academy</h3><p>Практичне навчання, реальні проєкти та розвиток майбутніх IT-фахівців.</p><div><span>Навчання</span><span>Спільнота</span><span>Менторство</span></div></div></a>
+        <div class="reel-stage">
+          <div class="reel-frame">
+            <a class="reel-shot is-current" href="https://ukrdiaspora.nauka.gov.ua" target="_blank" rel="noopener" tabindex="-1"><img src="https://images.pexels.com/photos/3182750/pexels-photo-3182750.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Міжнародна команда під час стратегічної сесії" draggable="false"></a>
+            <a class="reel-shot" href="https://dnipromovantu.com.ua" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Студентка працює з цифровим освітнім продуктом" draggable="false"></a>
+            <a class="reel-shot" href="https://publiclawntu.com.ua" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Професійне середовище для університетського юридичного проєкту" draggable="false"></a>
+            <a class="reel-shot" href="https://academy.itleo.com.ua" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Команда ITLEO Academy під час практичного навчання" draggable="false"></a>
           </div>
+          <div class="reel-nav">
+            <button class="reel-dir" type="button" data-dir="prev" aria-label="Попередній проєкт: ITLEO Academy"><span class="reel-dir-mark" aria-hidden="true">←</span><span class="reel-dir-name">ITLEO Academy</span></button>
+            <button class="reel-dir" type="button" data-dir="next" aria-label="Наступний проєкт: Dnipro Movantu"><span class="reel-dir-name">Dnipro Movantu</span><span class="reel-dir-mark" aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <div class="reel-detail">
+          <div class="reel-meta is-current">
+            <p>ПЛАТФОРМА · НАУКА</p>
+            <p>Національна платформа, що об’єднує українських науковців у всьому світі.</p>
+          </div>
+          <div class="reel-meta" aria-hidden="true">
+            <p>WEB · ОСВІТА</p>
+            <p>Зрозумілий, доступний і змістовний освітній web-продукт.</p>
+          </div>
+          <div class="reel-meta" aria-hidden="true">
+            <p>УНІВЕРСИТЕТ · ПРАВО</p>
+            <p>Структурований академічний ресурс для навчання, досліджень і професійної спільноти.</p>
+          </div>
+          <div class="reel-meta" aria-hidden="true">
+            <p>EDTECH · СПІЛЬНОТА</p>
+            <p>Практичне навчання, реальні проєкти та розвиток майбутніх IT-фахівців.</p>
+          </div>
+        </div>
+        <div class="reel-progress" role="group" aria-label="Проєкти">
+          <button class="reel-step is-active" type="button" data-index="0" aria-current="true">01</button>
+          <button class="reel-step" type="button" data-index="1">02</button>
+          <button class="reel-step" type="button" data-index="2">03</button>
+          <button class="reel-step" type="button" data-index="3">04</button>
+          <span class="reel-progress-line" aria-hidden="true"></span>
         </div>
       </div>
     </section>
@@ -165,7 +225,7 @@
       <div class="founder-copy reveal"><div class="section-number">05 · ЛІДЕРСТВО</div><blockquote>«Технології мають спрощувати бізнес, а не робити його складнішим».</blockquote><p>Леонід Ксенчук розвиває ITLEO з engineering-first підходом: чіткі рішення, пряма комунікація та відповідальність за результат. Кожен важливий проєкт отримує його особисту технічну увагу — від архітектури до запуску.</p><div class="founder-actions"><a class="button button-dark" href="https://leoxench.com/" target="_blank" rel="noopener">Особисте портфоліо <b>↗</b></a><a class="button button-line" href="https://www.linkedin.com/in/leonid-xenchuk-5022a6163/" target="_blank" rel="noopener">LinkedIn <b>↗</b></a></div></div>
     </section>
 
-    <section class="contact section-pad" id="contact">
+    <section class="contact" id="contact">
       <div class="contact-orb orb-one" aria-hidden="true"></div><div class="contact-orb orb-two" aria-hidden="true"></div>
       <div class="contact-copy reveal"><div class="section-number">06 · КОНТАКТИ</div><h2>Є ідея?<br><em>Перетворімо її на результат.</em></h2><p>Розкажіть про свій проєкт. Ми відповімо конкретними запитаннями, дамо первинну оцінку та запропонуємо найкращий наступний крок.</p><div class="contact-links"><a href="mailto:hello@itleo.com.ua">hello@itleo.com.ua ↗</a><a href="https://wa.me/380667388829" target="_blank" rel="noopener">WhatsApp · +380 66 73 888 29 ↗</a></div></div>
       <form class="contact-form glass reveal" id="leadForm" novalidate>

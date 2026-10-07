@@ -24,200 +24,273 @@ export function initReveal() {
   document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
 }
 
-export function initWorkCarousel() {
-  const root = document.querySelector('.work-carousel');
+export function initProjectReel() {
+  const root = document.querySelector('.project-reel');
   if (!root) return;
 
-  const viewport = root.querySelector('.work-viewport');
-  const track = root.querySelector('.work-track');
-  const originals = [...track.children];
-  if (originals.length < 2) return;
-
-  const cloneCard = (card) => {
-    const copy = card.cloneNode(true);
-    copy.dataset.clone = 'true';
-    copy.setAttribute('aria-hidden', 'true');
-    copy.tabIndex = -1;
-    return copy;
-  };
-
-  const clonesBefore = originals.map(cloneCard);
-  const clonesAfter = originals.map(cloneCard);
-  track.prepend(...clonesBefore);
-  track.append(...clonesAfter);
-  track.querySelectorAll('img').forEach((img) => { img.draggable = false; });
+  const titles = [...root.querySelectorAll('.reel-title')];
+  const shots = [...root.querySelectorAll('.reel-shot')];
+  const metas = [...root.querySelectorAll('.reel-meta')];
+  const steps = [...root.querySelectorAll('.reel-step')];
+  const count = root.querySelector('.reel-count');
+  const frame = root.querySelector('.reel-frame');
+  const line = root.querySelector('.reel-progress-line');
+  const prevBtn = root.querySelector('[data-dir="prev"]');
+  const nextBtn = root.querySelector('[data-dir="next"]');
+  const total = titles.length;
+  if (total < 2 || !frame) return;
 
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  let offset = 0;
-  let period = 0;
-  let step = 0;
-  let hovering = false;
-  let focused = false;
-  let dragging = false;
-  let animating = false;
-  let visible = false;
-  let last = 0;
-  let animId = 0;
-  let pointer = null;
+  let index = Math.max(0, titles.findIndex((title) => title.classList.contains('is-current')));
+  let busy = false;
+  let drag = null;
+  let suppressClick = false;
+  let settle = 0;
+  let lineReady = false;
 
-  const measure = () => {
-    const gap = parseFloat(getComputedStyle(track).gap) || 0;
-    period = originals[0].offsetLeft - clonesBefore[0].offsetLeft;
-    step = originals[0].offsetWidth + gap;
-  };
+  const pad = (value) => String(value).padStart(2, '0');
+  const nameAt = (item) => item.querySelector('.reel-name').textContent.trim();
 
-  const wrap = () => {
-    if (!period) return;
-    while (offset <= -period * 2) offset += period;
-    while (offset > -period) offset -= period;
-  };
-
-  const render = () => {
-    track.style.transform = `translate3d(${offset}px,0,0)`;
-  };
-
-  const autoplay = () => !reduceMotion.matches && !document.hidden && visible && !hovering && !focused && !dragging && !animating;
-
-  const tick = (now) => {
-    if (!last) last = now;
-    const dt = Math.min(48, now - last);
-    last = now;
-    if (autoplay()) {
-      offset -= 110 * (dt / 1000);
-      wrap();
-      render();
-    }
-    requestAnimationFrame(tick);
-  };
-
-  const move = (direction) => {
-    if (!period) return;
-    const delta = direction * step;
-    if (offset + delta > -period) offset -= period;
-    if (offset + delta < -period * 2) offset += period;
-    const from = offset;
-    const target = from + delta;
-    if (reduceMotion.matches) {
-      offset = target;
-      wrap();
-      render();
+  const placeLine = () => {
+    if (!line || !steps[index]) return;
+    const step = steps[index];
+    const next = steps[index + 1];
+    const after = step.offsetLeft + step.offsetWidth;
+    const room = next ? next.offsetLeft - after : 64;
+    const x = after + (room > 48 ? 12 : 8);
+    const apply = () => {
+      line.style.transform = `translate(${x}px, -50%)`;
+    };
+    if (!lineReady) {
+      line.style.transition = 'none';
+      apply();
+      void line.offsetWidth;
+      line.style.transition = '';
+      lineReady = true;
       return;
     }
-    const id = ++animId;
-    const start = performance.now();
-    animating = true;
-    const run = (now) => {
-      if (id !== animId) return;
-      const t = Math.min(1, (now - start) / 650);
-      offset = from + (target - from) * (1 - (1 - t) ** 3);
-      render();
-      if (t < 1) requestAnimationFrame(run);
-      else {
-        wrap();
-        render();
-        animating = false;
-      }
-    };
-    requestAnimationFrame(run);
+    apply();
   };
 
-  root.querySelectorAll('.work-arrow').forEach((button) => {
-    button.addEventListener('click', () => move(button.dataset.dir === 'prev' ? 1 : -1));
+  const sync = () => {
+    const prev = (index - 1 + total) % total;
+    const next = (index + 1) % total;
+    prevBtn.querySelector('.reel-dir-name').textContent = nameAt(titles[prev]);
+    nextBtn.querySelector('.reel-dir-name').textContent = nameAt(titles[next]);
+    prevBtn.setAttribute('aria-label', `Попередній проєкт: ${nameAt(titles[prev])}`);
+    nextBtn.setAttribute('aria-label', `Наступний проєкт: ${nameAt(titles[next])}`);
+    titles.forEach((title, item) => {
+      const on = item === index;
+      title.setAttribute('aria-hidden', String(!on));
+      title.tabIndex = on ? 0 : -1;
+    });
+    shots.forEach((shot, item) => {
+      shot.setAttribute('aria-hidden', String(item !== index));
+    });
+    metas.forEach((meta, item) => {
+      meta.setAttribute('aria-hidden', String(item !== index));
+    });
+    steps.forEach((step, item) => {
+      const on = item === index;
+      step.classList.toggle('is-active', on);
+      if (on) step.setAttribute('aria-current', 'true');
+      else step.removeAttribute('aria-current');
+    });
+    placeLine();
+  };
+
+  const clearMotion = (item) => {
+    titles[item].classList.remove('is-current', 'is-leaving');
+    shots[item].classList.remove('is-current', 'is-leaving', 'is-out-next', 'is-out-prev', 'is-from-right', 'is-from-left');
+    shots[item].style.transform = '';
+    shots[item].style.transition = '';
+    metas[item].classList.remove('is-current', 'is-leaving');
+  };
+
+  const go = (direction, target = null) => {
+    if (!direction || busy) return;
+    const from = index;
+    const to = target === null ? (index + direction + total) % total : target;
+    if (to === from) return;
+    index = to;
+    settle += 1;
+
+    if (reduceMotion.matches) {
+      clearMotion(from);
+      titles[to].classList.add('is-current');
+      shots[to].classList.add('is-current');
+      metas[to].classList.add('is-current');
+      count.textContent = `${pad(to + 1)} / ${pad(total)}`;
+      sync();
+      return;
+    }
+
+    busy = true;
+    titles[from].classList.remove('is-current');
+    titles[from].classList.add('is-leaving');
+    metas[from].classList.remove('is-current');
+    metas[from].classList.add('is-leaving');
+
+    const outgoing = shots[from];
+    const fromDrag = outgoing.style.transform !== '';
+    outgoing.classList.remove('is-current');
+    outgoing.classList.add('is-leaving', direction > 0 ? 'is-out-next' : 'is-out-prev');
+    if (fromDrag) {
+      outgoing.style.transition = 'opacity .64s ease, transform .64s cubic-bezier(.22, .61, .36, 1)';
+      void outgoing.offsetWidth;
+      outgoing.style.transform = '';
+    }
+
+    const incoming = shots[to];
+    incoming.style.transition = 'none';
+    incoming.classList.add(direction > 0 ? 'is-from-right' : 'is-from-left');
+    void incoming.offsetWidth;
+    incoming.style.transition = '';
+    void incoming.offsetWidth;
+    incoming.classList.add('is-current');
+    incoming.classList.remove('is-from-right', 'is-from-left');
+    titles[to].classList.add('is-current');
+    metas[to].classList.add('is-current');
+
+    count.classList.add('is-out');
+    window.setTimeout(() => {
+      count.textContent = `${pad(to + 1)} / ${pad(total)}`;
+      count.classList.remove('is-out');
+    }, 180);
+    sync();
+
+    window.setTimeout(() => {
+      const shot = shots[from];
+      shot.style.transition = 'none';
+      titles[from].style.transition = 'none';
+      metas[from].style.transition = 'none';
+      shot.classList.remove('is-leaving', 'is-out-next', 'is-out-prev');
+      titles[from].classList.remove('is-leaving');
+      metas[from].classList.remove('is-leaving');
+      shot.style.transform = '';
+      void shot.offsetWidth;
+      shot.style.transition = '';
+      titles[from].style.transition = '';
+      metas[from].style.transition = '';
+      busy = false;
+    }, 660);
+  };
+
+  const easeBack = (shot) => {
+    const token = ++settle;
+    const finish = (event) => {
+      if (event && event.propertyName !== 'transform') return;
+      if (token !== settle) return;
+      shot.removeEventListener('transitionend', finish);
+      shot.style.transition = '';
+      shot.style.transform = '';
+    };
+    shot.addEventListener('transitionend', finish);
+    shot.style.transition = 'transform .45s cubic-bezier(.22, .61, .36, 1)';
+    shot.style.transform = 'translateX(0)';
+    window.setTimeout(finish, 480);
+  };
+
+  prevBtn.addEventListener('click', () => go(-1));
+  nextBtn.addEventListener('click', () => go(1));
+  steps.forEach((step) => {
+    step.addEventListener('click', () => {
+      const to = Number(step.dataset.index);
+      if (Number.isNaN(to) || to === index) return;
+      go(to > index ? 1 : -1, to);
+    });
   });
 
-  root.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      move(1);
-    } else if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      move(-1);
-    }
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    const tag = event.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || event.target.isContentEditable) return;
+    const active = document.activeElement;
+    if (!root.matches(':hover') && !root.contains(active)) return;
+    event.preventDefault();
+    go(event.key === 'ArrowRight' ? 1 : -1);
   });
 
-  root.addEventListener('pointerenter', (event) => {
-    if (event.pointerType !== 'touch') hovering = true;
-  });
-  root.addEventListener('pointerleave', (event) => {
-    if (event.pointerType !== 'touch') hovering = false;
-  });
-  root.addEventListener('focusin', (event) => {
-    focused = true;
-    const card = event.target.closest?.('.case');
-    if (!card || card.dataset.clone || !period) return;
-    let left = card.offsetLeft + offset;
-    while (left + card.offsetWidth <= 0) {
-      offset += period;
-      left += period;
-    }
-    while (left >= viewport.clientWidth) {
-      offset -= period;
-      left -= period;
-    }
-    wrap();
-    render();
-  });
-  root.addEventListener('focusout', (event) => {
-    if (!root.contains(event.relatedTarget)) focused = false;
+  const setHistoryLock = (locked) => {
+    document.documentElement.classList.toggle('reel-x', locked);
+  };
+
+  root.addEventListener('pointerenter', () => setHistoryLock(true));
+  root.addEventListener('pointerleave', () => setHistoryLock(false));
+
+  root.addEventListener('wheel', (event) => {
+    setHistoryLock(true);
+    const absX = Math.abs(event.deltaX);
+    const absY = Math.abs(event.deltaY);
+    if (absX === 0 || absX <= absY) return;
+    event.preventDefault();
+    if ((drag && drag.active) || absX < 16) return;
+    go(event.deltaX > 0 ? 1 : -1);
+  }, { passive: false });
+
+  frame.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0 || busy) return;
+    drag = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      dx: 0,
+      active: false
+    };
   });
 
-  viewport.addEventListener('pointerdown', (event) => {
-    if (event.button !== 0) return;
-    pointer = { id: event.pointerId, x: event.clientX, y: event.clientY, offset, moved: false };
-  });
-  viewport.addEventListener('pointermove', (event) => {
-    if (!pointer || event.pointerId !== pointer.id) return;
-    const dx = event.clientX - pointer.x;
-    const dy = event.clientY - pointer.y;
-    if (!dragging) {
+  frame.addEventListener('pointermove', (event) => {
+    if (!drag || event.pointerId !== drag.id || busy) return;
+    const dx = event.clientX - drag.x;
+    const dy = event.clientY - drag.y;
+    if (!drag.active) {
       if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
       if (Math.abs(dy) > Math.abs(dx)) {
-        pointer = null;
+        drag = null;
         return;
       }
-      dragging = true;
-      pointer.moved = true;
-      viewport.classList.add('is-dragging');
-      viewport.setPointerCapture(event.pointerId);
+      drag.active = true;
+      settle += 1;
+      shots[index].style.transition = 'none';
+      try { frame.setPointerCapture(event.pointerId); } catch {}
     }
-    offset = pointer.offset + dx;
-    wrap();
-    render();
+    drag.dx = dx;
+    const follow = Math.max(-72, Math.min(72, dx * 0.45));
+    shots[index].style.transform = `translateX(${follow}px)`;
   });
+
   const endDrag = (event) => {
-    if (!pointer || event.pointerId !== pointer.id) return;
-    const moved = pointer.moved;
-    pointer = null;
-    dragging = false;
-    viewport.classList.remove('is-dragging');
-    if (moved) {
-      const stopClick = (click) => {
-        click.preventDefault();
-        click.stopPropagation();
-        viewport.removeEventListener('click', stopClick, true);
-      };
-      viewport.addEventListener('click', stopClick, true);
+    if (!drag || event.pointerId !== drag.id) return;
+    const state = drag;
+    drag = null;
+    if (!state.active) return;
+    suppressClick = true;
+    window.setTimeout(() => { suppressClick = false; }, 350);
+    const shot = shots[index];
+    if (Math.abs(state.dx) >= 56) {
+      go(state.dx < 0 ? 1 : -1);
+      return;
     }
+    easeBack(shot);
   };
-  viewport.addEventListener('pointerup', endDrag);
-  viewport.addEventListener('pointercancel', endDrag);
 
-  document.addEventListener('visibilitychange', () => { last = 0; });
-  reduceMotion.addEventListener('change', () => { last = 0; });
-  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(viewport);
-  new ResizeObserver(() => {
-    const ratio = period ? offset / period : -1;
-    measure();
-    if (!period) return;
-    offset = ratio * period;
-    wrap();
-    render();
-  }).observe(viewport);
+  frame.addEventListener('pointerup', endDrag);
+  frame.addEventListener('pointercancel', endDrag);
+  window.addEventListener('pointerup', endDrag);
+  window.addEventListener('pointercancel', endDrag);
 
-  measure();
-  offset = -period;
-  render();
-  requestAnimationFrame(tick);
+  frame.addEventListener('click', (event) => {
+    if (!suppressClick) return;
+    event.preventDefault();
+    event.stopPropagation();
+    suppressClick = false;
+  }, true);
+
+  if (typeof ResizeObserver !== 'undefined' && line) {
+    new ResizeObserver(() => placeLine()).observe(line.parentElement);
+  }
+
+  sync();
 }
 
 export function initMotion() {
