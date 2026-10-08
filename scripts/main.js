@@ -7,21 +7,6 @@ const isPhone = (value) => {
   return /^[+()\d\s.-]+$/.test(value) && digits.length >= 10 && digits.length <= 15;
 };
 
-const looksLikeWebsite = (value) => (
-  /^https?:\/\//i.test(value) ||
-  /^www\./i.test(value) ||
-  /^[^\s]+\.[a-z]{2,}(?:[/?#].*)?$/i.test(value)
-);
-
-const isWebsite = (value) => {
-  try {
-    const url = new URL(/^https?:\/\//i.test(value) ? value : `https://${value}`);
-    return url.hostname.includes('.') && !url.hostname.endsWith('.');
-  } catch {
-    return false;
-  }
-};
-
 const fieldError = (name, value) => {
   if (name === 'name') {
     if (!value) return 'Вкажіть ім’я та прізвище';
@@ -36,16 +21,6 @@ const fieldError = (name, value) => {
       return isPhone(value) ? '' : 'Вкажіть коректний номер телефону';
     }
     return 'Вкажіть коректний email або номер телефону';
-  }
-
-  if (name === 'company') {
-    if (!value || !looksLikeWebsite(value)) return '';
-    return isWebsite(value) ? '' : 'Вкажіть коректну адресу сайту';
-  }
-
-  if (name === 'message') {
-    if (!value) return 'Опишіть, що потрібно створити';
-    if (value.length < 10) return 'Повідомлення має містити щонайменше 10 символів';
   }
 
   return '';
@@ -108,29 +83,51 @@ const initContactForm = (form) => {
   updateSubmit();
 };
 
-const initPrinciples = () => {
-  const root = document.querySelector('.principles');
-  if (!root) return;
-
+const initAccordion = (root) => {
   const items = [...root.querySelectorAll('.principle-item')];
-  const detail = root.querySelector('.principle-detail');
-  const panel = detail.querySelector('p');
+  if (!items.length) return;
 
-  const select = (item) => {
-    items.forEach((entry) => {
-      const active = entry === item;
-      entry.classList.toggle('is-active', active);
-      entry.setAttribute('aria-pressed', String(active));
-    });
-    detail.classList.remove('is-shown');
-    panel.textContent = item.querySelector('p').textContent;
-    detail.setAttribute('aria-labelledby', item.id);
-    void detail.offsetWidth;
-    detail.classList.add('is-shown');
+  const panelOf = (item) => item.querySelector('.principle-panel');
+
+  const setOpen = (item, open) => {
+    const panel = panelOf(item);
+    if (item.classList.contains('is-active') === open) return;
+    item.classList.toggle('is-active', open);
+    item.querySelector('button').setAttribute('aria-expanded', String(open));
+    panel.setAttribute('aria-hidden', String(!open));
+    if (open) {
+      panel.style.height = `${panel.scrollHeight}px`;
+      return;
+    }
+    panel.style.height = `${panel.scrollHeight}px`;
+    void panel.offsetHeight;
+    panel.style.height = '0px';
   };
 
-  items.forEach((item) => item.addEventListener('click', () => select(item)));
-  select(items.find((item) => item.classList.contains('is-active')) || items[0]);
+  items.forEach((item) => {
+    const panel = panelOf(item);
+    if (item.classList.contains('is-active')) {
+      panel.style.transition = 'none';
+      panel.style.height = `${panel.scrollHeight}px`;
+      void panel.offsetHeight;
+      panel.style.transition = '';
+    } else {
+      panel.style.height = '0px';
+    }
+    item.querySelector('button').addEventListener('click', () => {
+      const willOpen = !item.classList.contains('is-active');
+      items.forEach((entry) => setOpen(entry, entry === item && willOpen));
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    items.forEach((item) => {
+      if (!item.classList.contains('is-active')) return;
+      const panel = panelOf(item);
+      panel.style.height = 'auto';
+      panel.style.height = `${panel.scrollHeight}px`;
+    });
+  });
 };
 
 const initServices = () => {
@@ -215,29 +212,51 @@ const initServices = () => {
     });
   }
 
-  if (header) {
-    const topThreshold = 80;
+  const scrollTop = document.querySelector('.scroll-top');
+  const preferReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const topThreshold = 80;
+  const scrollTopThreshold = 1650;
+
+  if (header || scrollTop) {
     const scrollSlack = 10;
     let scrollAnchor = 0;
 
-    window.addEventListener('scroll', () => {
+    const syncScrollUi = () => {
       const y = window.scrollY;
 
-      if (y <= topThreshold) {
-        header.classList.remove('hidden', 'scrolled');
-        scrollAnchor = y;
-      } else if (y > scrollAnchor + scrollSlack) {
-        header.classList.add('hidden');
-        scrollAnchor = y;
-      } else if (y < scrollAnchor - scrollSlack) {
-        header.classList.remove('hidden');
-        header.classList.add('scrolled');
-        scrollAnchor = y;
+      if (header) {
+        if (y <= topThreshold) {
+          header.classList.remove('hidden', 'scrolled');
+          scrollAnchor = y;
+        } else if (y > scrollAnchor + scrollSlack) {
+          header.classList.add('hidden');
+          scrollAnchor = y;
+        } else if (y < scrollAnchor - scrollSlack) {
+          header.classList.remove('hidden');
+          header.classList.add('scrolled');
+          scrollAnchor = y;
+        }
       }
-    }, { passive: true });
+
+      if (scrollTop) {
+        scrollTop.classList.toggle('is-visible', y > scrollTopThreshold);
+      }
+    };
+
+    window.addEventListener('scroll', syncScrollUi, { passive: true });
+    syncScrollUi();
   }
 
-  initPrinciples();
+  if (scrollTop) {
+    scrollTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: preferReducedMotion.matches ? 'auto' : 'smooth'
+      });
+    });
+  }
+
+  document.querySelectorAll('.principle-list').forEach(initAccordion);
   initServices();
   initReveal();
   initMotion();

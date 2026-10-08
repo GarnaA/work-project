@@ -41,6 +41,7 @@ export function initProjectReel() {
   if (total < 2 || !frame) return;
 
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const narrowLine = matchMedia('(max-width: 820px)');
   let index = Math.max(0, titles.findIndex((title) => title.classList.contains('is-current')));
   let busy = false;
   let drag = null;
@@ -55,9 +56,19 @@ export function initProjectReel() {
     if (!line || !steps[index]) return;
     const step = steps[index];
     const next = steps[index + 1];
-    const after = step.offsetLeft + step.offsetWidth;
-    const room = next ? next.offsetLeft - after : 64;
-    const x = after + (room > 48 ? 12 : 8);
+    const prev = steps[index - 1];
+    const pair = next || prev;
+    if (!pair) return;
+    const start = next ? step : prev;
+    const end = next ? next : step;
+    const gapStart = start.offsetLeft + start.offsetWidth;
+    const gapEnd = end.offsetLeft;
+    const gap = Math.max(0, gapEnd - gapStart);
+    const maxWidth = narrowLine.matches ? 22 : 46;
+    const slack = narrowLine.matches ? 8 : 24;
+    const width = gap > maxWidth + slack ? maxWidth : Math.max(narrowLine.matches ? 14 : 12, gap - slack);
+    line.style.width = `${width}px`;
+    const x = (gapStart + gapEnd) / 2 - width / 2;
     const apply = () => {
       line.style.transform = `translate(${x}px, -50%)`;
     };
@@ -311,18 +322,4 @@ export function initMotion() {
   });
   if (video) video.addEventListener('canplay', syncVideo);
   syncVideo();
-
-  if (!reduceMotion.matches && matchMedia('(pointer:fine)').matches) {
-    document.querySelectorAll('.magnetic').forEach((element) => {
-      element.addEventListener('pointermove', (event) => {
-        const rect = element.getBoundingClientRect();
-        const x = (event.clientX - rect.left - rect.width / 2) * .1;
-        const y = (event.clientY - rect.top - rect.height / 2) * .1;
-        element.style.transform = `translate(${x}px, ${y}px)`;
-      });
-      element.addEventListener('pointerleave', () => {
-        element.style.transform = '';
-      });
-    });
-  }
 }

@@ -16,7 +16,7 @@
 
 .tech-row span {
   font-family: Manrope, sans-serif;
-  font-size: 18px;
+  font-size: var(--fs-lead);
   font-weight: 600;
   letter-spacing: -.04em;
 }
@@ -32,16 +32,29 @@
 @media (max-width: 820px) {
   .signal {
     padding-left: 20px;
-    padding-right: 0;
-  }
-
-  .tech-row {
-    justify-content: flex-start;
-    flex-wrap: wrap;
     padding-right: 20px;
   }
 
+  .tech-row {
+    gap: 10px;
+  }
+
   .tech-row span {
-    font-size: 17px;
+    font-size: var(--fs-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-row {
+    gap: 6px;
+  }
+
+  .tech-row span {
+    font-size: var(--fs-meta);
+  }
+
+  .tech-row i {
+    width: 4px;
+    height: 4px;
   }
 }

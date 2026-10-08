@@ -45,7 +45,7 @@
 
 .founder-copy blockquote {
   margin: 42px 0 34px;
-  font-size: clamp(40px, 5.2vw, 78px);
+  font-size: var(--fs-display);
   line-height: 1.06;
   font-weight: 350;
   letter-spacing: -.06em;
@@ -54,7 +54,7 @@
 .founder-copy > p {
   max-width: 650px;
   color: var(--muted);
-  font-size: 17px;
+  font-size: var(--fs-lead);
   line-height: 1.7;
 }
 
@@ -77,8 +77,3 @@
   }
 }
 
-@media (max-width: 480px) {
-  .founder-copy blockquote {
-    font-size: 42px;
-  }
-}

@@ -25,7 +25,7 @@
   border: 0;
   border-radius: 999px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: var(--fs-sm);
   font-weight: 600;
   letter-spacing: -.025em;
   transition: transform .35s var(--ease), box-shadow .35s ease, background .35s ease;
@@ -49,8 +49,66 @@
   background: rgba(255,255,255,.13);
 }
 
-.header-cta:hover, .button:hover {
-  transform: translateY(-3px);
+.arrow {
+  display: inline-block;
+  transition: transform .25s ease;
+}
+
+:is(a, button):hover .arrow {
+  transform: translate(4px, -4px);
+}
+
+.circle-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: rgba(255, 255, 255, .62);
+  border: 1px solid rgba(10, 39, 72, .16);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .35s var(--ease), background .35s ease, opacity .35s ease, visibility .35s ease;
+}
+
+.circle-btn.hero-in {
+  transition: opacity .9s var(--ease), transform .9s var(--ease), background .35s ease;
+}
+
+.js.hero-ready .circle-btn.hero-in {
+  transition-delay: .25s, .25s, 0s;
+}
+
+.circle-btn:hover {
+  background: #fff;
+}
+
+.scroll-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 40;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(12px);
+}
+
+.scroll-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.circle-btn.hero-down:hover .arrow {
+  transform: translateY(4px);
+}
+
+.circle-btn.scroll-top:hover .arrow {
+  transform: translateY(-4px);
 }
 
 .button-dark {
@@ -59,21 +117,13 @@
   box-shadow: 0 18px 40px rgba(10,39,72,.18);
 }
 
-.button-glass {
-  color: var(--ink);
-  background: rgba(255,255,255,.43);
-  border: 1px solid rgba(255,255,255,.74);
-  -webkit-backdrop-filter: blur(26px);
-  backdrop-filter: blur(26px);
-}
-
 .button-line {
   min-height: 56px;
   background: transparent;
   border: 1px solid var(--line);
 }
 
-.button-glass b, .button-line b {
+.button-line b {
   background: rgba(10,39,72,.08);
 }
 
@@ -93,18 +143,42 @@
 .section-head > p {
   padding-bottom: 8px;
   color: var(--muted);
-  font-size: 17px;
+  font-size: var(--fs-lead);
   line-height: 1.65;
 }
 
 @media (max-width: 820px) {
-  .manifesto, .services, .work, .process, .founder, .contact {
+  .services, .work, .process, .founder, .contact {
     padding-top: 95px;
     padding-bottom: 95px;
   }
 
-  .manifesto-grid, .section-head, .work-intro {
+  .section-head,
+  .work-intro {
     grid-template-columns: 1fr;
     gap: 38px;
+  }
+
+  .circle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 20px;
+  }
+
+  .scroll-top {
+    right: 16px;
+    bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .services, .work, .process, .founder, .contact {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .scroll-top {
+    right: 12px;
+    bottom: 14px;
   }
 }
